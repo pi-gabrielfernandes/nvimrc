@@ -1,6 +1,6 @@
-vim.wo.number = true
-vim.wo.relativenumber = true
-vim.wo.scrolloff = 999
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.scrolloff = 20
 
 vim.o.hlsearch = false
 
