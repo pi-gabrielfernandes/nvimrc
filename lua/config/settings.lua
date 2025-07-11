@@ -1,0 +1,26 @@
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.scrolloff = 20
+vim.o.hlsearch = false
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.expandtab = true
+vim.o.autoindent = true
+vim.o.wrap = false
+vim.o.smartcase = true
+vim.o.cursorline = true
+vim.o.guicursor = "n-v-c-i:block"
+vim.o.termguicolors = true
+vim.o.background = "dark"
+vim.o.signcolumn = "yes"
+vim.o.clipboard = "unnamedplus"
+vim.o.splitright = true
+vim.o.splitbelow = true
+vim.o.undofile = true
+vim.o.mouse = "a"
+vim.o.foldmethod = "expr"
+vim.o.foldlevel = 99
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+
+vim.g.lazygit_floating_window_border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+vim.g.lazygit_floating_window_use_plenary = 1
