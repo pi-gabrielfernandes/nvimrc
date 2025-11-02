@@ -3,6 +3,8 @@ require("config.keymaps")
 require("config.settings")
 require("core.lazy")
 
+vim.lsp.enable({ "lua_ls" })
+
 vim.diagnostic.config({
 	virtual_lines = true,
 	virtual_text = true,
@@ -27,5 +29,4 @@ vim.diagnostic.config({
 	},
 })
 
-vim.lsp.enable({ "lua_ls" })
 vim.cmd.colorscheme("rose-pine")
