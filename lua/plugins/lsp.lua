@@ -4,7 +4,8 @@ return {
 		dependencies = { "mason-org/mason.nvim", opts = {} },
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "denols", "gopls" },
+				ensure_installed = { "lua_ls", "ts_ls", "gopls", "kotlin_lsp" },
+				automatic_enable = false,
 			})
 		end,
 	},
@@ -16,11 +17,10 @@ return {
 			"saghen/blink.cmp",
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			vim.lsp.config("*", { capabilities = capabilities })
 
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
+			vim.lsp.config("lua_ls", {
 				settings = {
 					Lua = {
 						runtime = { version = "LuaJIT" },
@@ -34,21 +34,39 @@ return {
 				},
 			})
 
-			lspconfig.denols.setup({
-				capabilities = capabilities,
-				root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+			-- vim.lsp.config("denols", {
+			-- 	root_markers = { "deno.json", "deno.jsonc" },
+			-- })
+
+			vim.lsp.config("ts_ls", {
+				root_markers = { "package.json", "package-lock.json" },
 			})
 
-			lspconfig.gopls.setup({
-				capabilities = capabilities,
+			vim.lsp.config("kotlin_lsp", {
+				cmd = { "intellij-server", "--stdio" },
+				root_markers = { "settings.gradle", "settings.gradle.kts", "pom.xml", ".git" },
 			})
+
+			vim.lsp.config("gopls", {
+				settings = {
+					gopls = {
+						analyses = {
+							unusedparams = true,
+							staticcheck = true,
+						},
+						staticcheck = true,
+						gofumpt = true, -- Optional: enforces stricter formatting
+					},
+				},
+			})
+
+			vim.lsp.enable({ "lua_ls", "ts_ls", "kotlin_lsp", "gopls" })
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(ev)
 					local opts = { buffer = ev.buf }
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 				end,
