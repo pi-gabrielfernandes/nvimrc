@@ -14,6 +14,20 @@ vim.o.termguicolors = true
 vim.o.background = "dark"
 vim.o.signcolumn = "yes"
 vim.o.clipboard = "unnamedplus"
+if vim.fn.has("mac") == 0 then
+	vim.g.clipboard = {
+		name = "xsel_override",
+		copy = {
+			["+"] = "xsel --clipboard --input",
+			["*"] = "xsel --clipboard --input",
+		},
+		paste = {
+			["+"] = "xsel --clipboard --output",
+			["*"] = "xsel --clipboard --output",
+		},
+		cache_enabled = 0,
+	}
+end
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.undofile = true
